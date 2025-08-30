@@ -5,6 +5,7 @@
 	<li>File System Management</li>
 	<li>Memory Management</li>
 	<li>Process Management</li>
+	<li>User Management</li>
 	<li>Disk Partitioning</li>
 	<li>NodeJS App Deployment</li>
 	<li>Installation of NFS and its Configuration</li>
