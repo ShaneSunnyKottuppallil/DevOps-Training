@@ -1,13 +1,12 @@
 **********************************************************************************************************************************************************************************
-<b>DevOps Training</b> <br>
-It includes :-
-	
-	1) File System Management
-	2) User Management
-	3) Memory Management
-	4) Process Management
-	5) Disk Partitioning
-	6) NodeJS App Deployment
-	7) Installation of NFS and its Configuration
-
+<h2><b>DevOps Training</b></h2><br>
+<h3>OS</h3>
+<ul>
+	<li>File System Management</li>
+	<li>Memory Management</li>
+	<li>Process Management</li>
+	<li>Disk Partitioning</li>
+	<li>NodeJS App Deployment</li>
+	<li>Installation of NFS and its Configuration</li>
+</ul>
 ***********************************************************************************************************************************************************************************
