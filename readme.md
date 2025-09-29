@@ -17,6 +17,7 @@
 	<li>Django Chat Application Deployment</li>
 	<li>RDS Deployment For ChatDB</li>
 	<li>Enabling ALB & ASG App Deployment</li>
+	<li>AWS Three-Tier Infrastructure Build using AWS CLI</li>
 </ul>
 
 ***********************************************************************************************************************************************************************************
