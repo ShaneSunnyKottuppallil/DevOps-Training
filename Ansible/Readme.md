@@ -49,27 +49,7 @@ The repo contains inventories, playbooks, and three roles that together:
 
 # 🏗️ 3. High-Level Architecture / Flow
 
-
-
-             ┌─────────────────────┐
-             │      Bastion        │
-             │   (SSH Jump Host)   │
-             └─────────┬───────────┘
-                       │
-  ┌────────────────────┼─────────────────────┐
-  │                    │                     │
-┌───────────┐ ┌─────────────┐ ┌──────────────┐
-│ chatdb │ │ chatapp │ │ chatweb │
-│ MySQL │◀────▶ │ Django+Gunicorn │ ◀▶ │ Nginx Reverse │
-└───────────┘ └─────────────┘ └──────────────┘
-
-
-
-
-
-
-
-### **Architecture Summary**
+**Architecture Summary**
 1. **Inventory** → Defines host groups (`chatdb`, `chatapp`, `chatweb`).  
 2. **Playbooks** → Target groups and load vars via `vars_files`.  
 3. **Roles** execute tasks such as:
