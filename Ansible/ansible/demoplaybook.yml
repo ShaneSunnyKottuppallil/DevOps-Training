@@ -1,0 +1,36 @@
+- name: my first play
+  hosts: chatdb
+  tasks:
+    - name: Ping my Chatdb
+      ansible.builtin.ping:
+
+    - name: Print Message
+      ansible.builtin.debug:
+        msg: Hello World!
+
+    - name: Installing MySQL
+      become: true
+      ansible.builtin.apt:
+        name: mysql-server
+        state: present
+        update_cache: yes
+
+    - name: Copying a File to Remote ChatDB
+      ansible.builtin.copy:
+       src: /home/ssk/Documents/DevOps Training/RANDOMFOLDER/index.txt
+       dest: /home/ubuntu/
+       owner: ubuntu
+       group: ubuntu
+       mode: '777'
+
+#    - name: Deleting the Copied file
+#      ansible.builtin.file:
+#       path: /home/ubuntu/index.txt
+#       state: absent
+
+    - name: Starting and Enabling MySQL service.
+      service:
+        name: mysql
+        state: started
+        enabled: yes
+    

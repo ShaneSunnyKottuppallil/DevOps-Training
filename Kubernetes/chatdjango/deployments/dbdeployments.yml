@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dbdeployment
+  labels:
+    app: chatdb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chatdb
+  template:
+    metadata:
+      labels:
+        app: chatdb
+    spec:
+      containers:
+      - name: chatdb
+        image: mysql/mysql-server
+        ports:
+         - containerPort: 3306
+        envFrom:
+         - secretRef:  
+            name: dbsecret
+        volumeMounts:
+         - name: pvcdb
+           mountPath: /var/lib/mysql
+      volumes:
+      - name: pvcdb
+        persistentVolumeClaim:
+          claimName: pvcdb

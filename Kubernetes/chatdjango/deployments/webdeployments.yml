@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webdeployment
+  labels:
+    app: chatweb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chatweb
+  template:
+    metadata:
+      labels:
+        app: chatweb
+    spec:
+      containers:
+      - name: chatweb
+        image: nginx:stable
+        ports:
+         - containerPort: 80
+        volumeMounts:
+          - name: nginxconfvol
+            mountPath: /etc/nginx/conf.d/default.conf
+            subPath: default.conf
+      volumes:
+        - name: nginxconfvol
+          configMap:
+            name: nginxconf

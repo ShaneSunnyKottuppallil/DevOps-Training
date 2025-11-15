@@ -1,0 +1,9 @@
+- name: Chat Web Configuration
+  hosts: chatweb
+  become: true
+  vars_files:
+    - ../roles/chatweb/vars/web.yml
+    - ../roles/chatweb/vars/vaults.yml
+  
+  roles: 
+    - ../roles/chatweb

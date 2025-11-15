@@ -1,0 +1,10 @@
+- name: Chat Application Configuration
+  hosts: chatapp
+  become: true
+  vars_files:
+    - ../roles/chatapp/vars/app.yml
+    - ../roles/chatapp/vars/vaults.yml
+   
+  roles:
+      - ../roles/chatapp
+ 

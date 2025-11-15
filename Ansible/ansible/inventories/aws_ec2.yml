@@ -1,0 +1,6 @@
+plugin: amazon.aws.aws_ec2
+regions:
+  - ap-south-1
+compose:
+  ansible_host: 10.0.0.146
+  

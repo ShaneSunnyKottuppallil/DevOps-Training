@@ -1,0 +1,45 @@
+---
+# tasks file for chatdb
+    - name: Installing MySQL on ubuntu
+      #become: true
+      apt:
+         name: mysql-server
+         state: present
+
+    - name: Starting and Enabling MySQL Service.
+      #become: true
+      service:
+         name: mysql
+         state: started
+         enabled: yes
+   
+    - name: Updating Bind Address and Restart MySQL Server.
+      #become: true
+      shell: 
+         cmd: sudo sed -i 's/^bind-address.*/bind-address=0.0.0.0/' /etc/mysql/mysql.conf.d/mysqld.cnf
+      notify: restart mysql
+
+   #PyMySQL is a requirement for using community.mysql.mysql_db and community.mysql.mysql_user
+    - name: Installing PyMySQL Requirement for using mysql collections
+      ansible.builtin.apt:
+         name: python3-pymysql
+         state: present
+         update_cache: yes
+       
+    - name: MySQL Configuration (DB Creation)
+      community.mysql.mysql_db:
+         name: "{{db_name}}"
+         state: present
+         login_unix_socket: "{{unix_login}}"
+
+    - name: MySQL Configuration (DB User Creation)
+      community.mysql.mysql_user:
+         name: "{{db_user}}"
+         password: "{{db_user_pass}}"
+         host: '%'
+         state: present
+         priv:
+            "{{db_name}}.*:ALL"
+         login_unix_socket: "{{unix_login}}"
+
+    

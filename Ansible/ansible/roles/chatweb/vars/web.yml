@@ -1,0 +1,2 @@
+nginx_conf: "/etc/nginx/sites-available/fundoo"
+appserver: "10.0.0.155:8001"

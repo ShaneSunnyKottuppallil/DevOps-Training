@@ -1,0 +1,9 @@
+ - name: ChatDB instance Configuration
+   hosts: chatdb
+   become: true
+   vars_files:
+    - ../roles/chatdb/vars/db.yml
+    - ../roles/chatdb/vars/vaults.yml
+   
+   roles: 
+    - ../roles/chatdb

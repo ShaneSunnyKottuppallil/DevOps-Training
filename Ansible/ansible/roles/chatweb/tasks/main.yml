@@ -1,0 +1,36 @@
+---
+# tasks file for chatweb
+    - name: apt Update
+      apt:
+        update_cache: true
+
+    - name: Installing Nginx
+      apt:
+        name: nginx
+        state: present
+
+    - name: Setting Up Nginx Configuration
+      template:
+        src: ../templates/nginxconf.j2 
+        dest: "{{nginx_conf}}"
+
+    - name: Remove default site if present
+      ansible.builtin.file:
+        path: /etc/nginx/sites-enabled/default
+        state: absent
+    
+    - name: Create symlink in sites-enabled
+      ansible.builtin.file:
+        src: "{{nginx_conf}}"
+        dest: /etc/nginx/sites-enabled/fundoo
+        state: link
+        
+    - name: nginx -t
+      shell: 
+        cmd: nginx -t
+
+    - name: Reload nginx
+      service: 
+        name: nginx
+        state: restarted 
+

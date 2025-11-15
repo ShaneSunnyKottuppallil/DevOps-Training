@@ -1,0 +1,14 @@
+[Unit]
+Description=Gunicorn (WSGI) for Fundoo Django
+After=network.target
+[Service] 
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/chatapp/fundoo
+EnvironmentFile=-/chatapp/.env
+ExecStart=/chatapp/.venv/bin/gunicorn \
+    --workers 3 \
+    --bind 0.0.0.0:8001 \
+    fundoo.wsgi:application
+[Install]
+WantedBy=multi-user.target

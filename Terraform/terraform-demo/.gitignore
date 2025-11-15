@@ -1,0 +1,8 @@
+# Terraform local files
+.terraform/
+.terraform.lock.hcl
+*.tfstate*
+terraform.tfvars
+override.tf
+override.tf.json
+*.backup

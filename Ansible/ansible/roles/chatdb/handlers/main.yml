@@ -1,0 +1,6 @@
+---
+# handlers file for chatdb
+    - name: restart mysql
+      service:
+         name: mysql
+         state: restarted

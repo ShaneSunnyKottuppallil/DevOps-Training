@@ -1,0 +1,3 @@
+db_name: 'fundoodb'
+db_user: 'fundoo'
+unix_login: '/var/run/mysqld/mysqld.sock'

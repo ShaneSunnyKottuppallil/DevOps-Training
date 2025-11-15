@@ -1,0 +1,122 @@
+---
+# tasks file for chatapp
+    - name: Apt Update
+      apt:
+        update_cache: true
+
+    #Installing Git on Ubuntu
+    - name: Installing Dependencies
+      apt: 
+        name: 
+          - git
+          - build-essential
+          - pkg-config
+          - default-libmysqlclient-dev
+        state: present
+        update_cache: true
+
+    # cd to / and clone git repo
+    - name: Clonning Git Repository on /
+      git:
+        repo: 'https://{{git_username}}:{{git_pat}}@github.com/{{git_username}}/chatapp.git'
+        clone: true
+        dest: /chatapp
+        single_branch: true
+        version: main
+        force: yes
+      
+    - name: Add apt repo for python3.8 installation
+      apt_repository: 
+        repo: 'ppa:deadsnakes/ppa'
+        state: present
+      
+    - name: apt update
+      apt:
+        update_cache: true
+
+    - name: Install Python 3.8 and dependencies
+      apt:
+        name:
+          - python3.8
+          - python3.8-venv
+          - python3.8-dev
+        state: present
+        update_cache: yes
+
+    - name: Create Python virtual environment
+      command: python3.8 -m venv .venv
+      args:
+        chdir: /chatapp
+        creates: /chatapp/.venv/bin/activate
+
+    - name: Install requirements into venv
+      pip:
+        requirements: /chatapp/requirements.txt
+        virtualenv: /chatapp/.venv
+        virtualenv_python: python3.8
+
+    - name: /chatapp ownership to ubuntu
+      ansible.builtin.file:
+        path: /chatapp
+        state: directory
+        owner: ubuntu
+        group: ubuntu
+        mode: '0755'
+        recurse: yes
+
+    - name: Install mysqlclient in venv
+      pip:
+        name: mysqlclient
+        virtualenv: /chatapp/.venv
+        virtualenv_python: python3.8
+
+    - name: Creating .env file using Jinja2 Template
+      template: 
+         src: ../templates/dbconf.j2
+         dest: /chatapp/.env
+         owner: ubuntu
+         group: ubuntu
+         mode: '0600'
+    
+    - name: Run Django migrations (using venv python and .env)
+      ansible.builtin.shell: |
+        set -a
+        source /chatapp/.env
+        set +a
+        /chatapp/.venv/bin/python fundoo/manage.py migrate --noinput
+      args:
+        chdir: /chatapp
+        executable: /bin/bash
+      become: true
+      become_user: ubuntu
+
+    - name: Collect static files (using venv python and .env)
+      ansible.builtin.shell: |
+        set -a
+        source /chatapp/.env
+        set +a
+        /chatapp/.venv/bin/python fundoo/manage.py collectstatic --noinput
+      args:
+        chdir: /chatapp
+        executable: /bin/bash
+      become: true
+      become_user: ubuntu
+
+    - name: Gunincorn Configuration
+      template:
+        src: ../templates/guniconf.j2
+        dest: "{{gunicorn_service_conf}}"
+
+    - name: System Daemon Reload
+      ansible.builtin.systemd:
+        daemon_reload: true
+
+    - name: Enable and start fundoo-gunicorn service
+      ansible.builtin.systemd:
+        name: fundoo-gunicorn
+        enabled: true
+        state: started
+
+
+
+

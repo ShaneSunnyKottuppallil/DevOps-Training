@@ -1,0 +1,23 @@
+all:
+  hosts:
+    chatdb:
+      ansible_host: 10.0.0.146
+      ansible_user: ubuntu
+      ansible_ssh_private_key_file: /home/ssk/.ssh/chatapp.pem
+      ansible_ssh_common_args: >
+        -o ProxyCommand="ssh -i /home/ssk/.ssh/chatapp.pem -o IdentitiesOnly=yes -W %h:%p ubuntu@13.234.116.36" 
+    
+    chatapp:
+      ansible_host: 10.0.0.155
+      ansible_user: ubuntu
+      ansible_ssh_private_key_file: /home/ssk/.ssh/chatapp.pem
+      ansible_ssh_common_args: >
+        -o ProxyCommand="ssh -i /home/ssk/.ssh/chatapp.pem -o IdentitiesOnly=yes -W %h:%p ubuntu@13.234.116.36"
+
+    chatweb:
+      ansible_host: 10.0.0.53
+      ansible_user: ubuntu
+      ansible_ssh_private_key_file: /home/ssk/.ssh/chatapp.pem
+      ansible_ssh_common_args: >
+        -o ProxyCommand="ssh -i /home/ssk/.ssh/chatapp.pem -o IdentitiesOnly=yes -W %h:%p ubuntu@13.234.116.36"
+      
