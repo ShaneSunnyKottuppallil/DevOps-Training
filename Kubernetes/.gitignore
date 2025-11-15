@@ -1,1 +1,2 @@
-secrets/
+appsecret.yml
+dbsecret.yml
